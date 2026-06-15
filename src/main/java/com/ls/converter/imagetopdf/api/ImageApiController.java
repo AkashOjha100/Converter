@@ -1,29 +1,27 @@
-package com.ls.converter.api;
+package com.ls.converter.imagetopdf.api;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.ls.converter.entity.Document;
-import com.ls.converter.request.PdfRequest;
-import com.ls.converter.response.DocumentResponse;
-import com.ls.converter.service.DocumentService;
+import com.ls.converter.imagetopdf.entity.Document;
+import com.ls.converter.imagetopdf.request.PdfRequest;
+import com.ls.converter.imagetopdf.response.DocumentResponse;
+import com.ls.converter.imagetopdf.service.DocumentService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/documents")
-public class ApiController {
+@CrossOrigin(origins = "*")
+@Tag(name = "API Services (Image)")
+public class ImageApiController {
     private final DocumentService documentService;
 
-    public ApiController(DocumentService documentService) {
+    public ImageApiController(DocumentService documentService) {
         this.documentService = documentService;
     }
 
@@ -46,7 +44,7 @@ public class ApiController {
         }
     }
 
-    @GetMapping("v1/get-by-id{id}")
+    //@GetMapping("v1/get-by-id{id}")
     public Document  getDocumentById(@RequestParam("id") UUID id) throws  Exception {
         try{
             return documentService.getDocumentById(id);
@@ -81,17 +79,5 @@ public class ApiController {
         }
     }
 
-    @PostMapping(value = "/v1/json-to-pdf",produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<byte[]> jsonToPdf(@RequestBody String json) throws Exception {
-        try{
-            byte[] pdf = documentService.jsonToPdf(json);
-            return ResponseEntity.ok().header(
-                    HttpHeaders.CONTENT_DISPOSITION,
-                    "attachment; filename=json.pdf"
-            ).contentType(MediaType.APPLICATION_PDF).body(pdf);
-        }catch(Exception e){
-            throw new RuntimeException(e.getMessage());
-        }
-    }
 
 }

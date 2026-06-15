@@ -1,5 +1,6 @@
-package com.ls.converter.entity;
+package com.ls.converter.imagetopdf.entity;
 
+import com.ls.converter.common.entity.EntityBase;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Lob;
@@ -11,7 +12,7 @@ import lombok.*;
 @Builder
 @Entity
 @EqualsAndHashCode(callSuper = true)
-public class Document extends EntityBase{
+public class Document extends EntityBase {
     private String fileName;
     private String fileType;
 

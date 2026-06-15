@@ -1,18 +1,17 @@
-package com.ls.converter.response;
+package com.ls.converter.imagetopdf.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class DocumentResponse {
-    private UUID id;
-    private String fileName;
-    private String fileType;
+public class PdfRequest {
+    private List<UUID> documentIds;
 }

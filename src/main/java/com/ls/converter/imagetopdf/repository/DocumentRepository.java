@@ -1,6 +1,6 @@
-package com.ls.converter.repository;
+package com.ls.converter.imagetopdf.repository;
 
-import com.ls.converter.entity.Document;
+import com.ls.converter.imagetopdf.entity.Document;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

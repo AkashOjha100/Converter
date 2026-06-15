@@ -1,4 +1,4 @@
-package com.ls.converter.model;
+package com.ls.converter.imagetopdf.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

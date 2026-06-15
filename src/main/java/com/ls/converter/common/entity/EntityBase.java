@@ -1,4 +1,4 @@
-package com.ls.converter.entity;
+package com.ls.converter.common.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
