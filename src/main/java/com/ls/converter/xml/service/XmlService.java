@@ -3,14 +3,17 @@ package com.ls.converter.xml.service;
 import com.ls.converter.common.util.AppUtil;
 import org.springframework.stereotype.Service;
 import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
 import tools.jackson.dataformat.xml.XmlMapper;
 
 @Service
 public class XmlService {
     private final AppUtil appUtil;
+    private final ObjectMapper objectMapper;
 
-    public XmlService(AppUtil appUtil) {
+    public XmlService(AppUtil appUtil, ObjectMapper objectMapper) {
         this.appUtil = appUtil;
+        this.objectMapper = objectMapper;
     }
 
     //XML-TO-PDF
@@ -44,4 +47,27 @@ public class XmlService {
             throw new RuntimeException(e.getMessage());
         }
     }
+
+    public String xmlToJson(String xml) throws Exception {
+        try{
+            XmlMapper xmlMapper = new XmlMapper();
+            JsonNode node = xmlMapper.readTree(xml);
+
+            return objectMapper
+                    .writerWithDefaultPrettyPrinter()
+                    .writeValueAsString(node);
+        }catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+//    public byte[] xmlToCsv(String xml) throws Exception {
+//        try{
+//            XmlMapper xmlMapper = new XmlMapper();
+//            JsonNode node = xmlMapper.readTree(xml);
+//            return createCsv(node);
+//        }catch (Exception e){
+//            throw new RuntimeException(e.getMessage());
+//        }
+//    }
 }

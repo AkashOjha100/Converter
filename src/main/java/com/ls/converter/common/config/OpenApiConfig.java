@@ -11,9 +11,9 @@ public class OpenApiConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Document PDF Generator API")
+                        .title("Utilities Generator API")
                         .version("1.0")
                         .description(
-                                "Upload Images -> Store Base64 -> Generate PDF"));
+                                "Upload Utilities -> Generate Needed format"));
     }
 }

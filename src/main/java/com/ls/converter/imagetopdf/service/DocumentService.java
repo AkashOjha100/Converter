@@ -1,10 +1,5 @@
 package com.ls.converter.imagetopdf.service;
 
-import com.ls.converter.common.util.AppUtil;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import tools.jackson.databind.JsonNode;
-import tools.jackson.databind.ObjectMapper;
 import com.ls.converter.imagetopdf.entity.Document;
 import com.ls.converter.imagetopdf.repository.DocumentRepository;
 import com.ls.converter.imagetopdf.response.DocumentResponse;
@@ -14,11 +9,9 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import tools.jackson.dataformat.xml.XmlMapper;
 
 import java.io.ByteArrayOutputStream;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,12 +30,10 @@ public class DocumentService {
                     .fileType(file.getContentType())
                     .base64Data(base64)
                     .build();
-            System.out.println("Base64 Length = " + base64.length());
-            System.out.println(base64.substring(0, 50));
 
             return documentRepository.save(document).getId();
         }catch (Exception e){
-            throw new RuntimeException("Failed to upload file");
+            throw new RuntimeException(e.getMessage());
         }
     }
     public byte[] getGeneratePdf(List<UUID> id) throws Exception {
@@ -87,11 +78,12 @@ public class DocumentService {
         }
     }
 
-    public Document getDocumentById(UUID id) throws Exception {
+    public DocumentResponse getDocumentById(UUID id) throws Exception {
         try{
             return documentRepository.findById(id)
                     .stream()
-                    .map(document -> Document.builder()
+                    .map(document -> DocumentResponse.builder()
+                            .id(document.getId())
                             .fileName(document.getFileName())
                             .fileType(document.getFileType())
                             .base64Data(document.getBase64Data())

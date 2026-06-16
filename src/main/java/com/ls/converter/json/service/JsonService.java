@@ -12,9 +12,15 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.node.ObjectNode;
+import tools.jackson.dataformat.xml.XmlMapper;
 
 import java.io.ByteArrayOutputStream;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
@@ -79,6 +85,26 @@ public class JsonService {
         try {
             JsonNode root = objectMapper.readTree(json);
             return appUtil.createWord(root);
+        }catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+    public String jsonToXml(JsonNode root) throws Exception {
+        try{
+            //JsonNode root = objectMapper.readTree(json);
+            XmlMapper xmlMapper = new XmlMapper();
+            if(root.isArray()) {
+                Map<String, Object> map = new LinkedHashMap<>();
+                //ObjectNode wrapper = objectMapper.createObjectNode();
+                map.put("records", objectMapper.convertValue(root, List.class));
+                return xmlMapper
+                        .writerWithDefaultPrettyPrinter()
+                        .writeValueAsString(map);
+            }
+            Map<String , Object> map = objectMapper.convertValue(root, Map.class);
+            return xmlMapper
+                    .writerWithDefaultPrettyPrinter()
+                    .writeValueAsString(map);
         }catch (Exception e){
             throw new RuntimeException(e.getMessage());
         }

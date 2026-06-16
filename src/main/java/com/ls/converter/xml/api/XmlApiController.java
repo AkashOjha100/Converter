@@ -57,4 +57,13 @@ public class XmlApiController {
             throw new RuntimeException(e.getMessage());
         }
     }
+
+    @PostMapping(value = "/v1/xml-to-json" , produces = MediaType.APPLICATION_JSON_VALUE)
+    public String xmlToJson(@RequestBody String xml) throws Exception {
+        try{
+            return xmlService.xmlToJson(xml);
+        }catch(Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 }

@@ -15,4 +15,5 @@ public class DocumentResponse {
     private UUID id;
     private String fileName;
     private String fileType;
+    private String base64Data;
 }

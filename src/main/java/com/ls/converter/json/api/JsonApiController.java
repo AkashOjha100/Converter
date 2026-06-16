@@ -6,6 +6,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tools.jackson.databind.JsonNode;
 
 @RestController
 @RequestMapping("/api/json")
@@ -53,6 +54,15 @@ public class JsonApiController {
                     HttpHeaders.CONTENT_DISPOSITION,
                     "attachment; filename=word.docx"
             ).contentType(MediaType.APPLICATION_OCTET_STREAM).body(doc);
+        }catch(Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @PostMapping(value = "/v1/json-to-xml" , produces = MediaType.APPLICATION_XML_VALUE)
+    public String jsonToXml(@RequestBody JsonNode json) throws Exception {
+        try{
+            return jsonService.jsonToXml(json);
         }catch(Exception e){
             throw new RuntimeException(e.getMessage());
         }

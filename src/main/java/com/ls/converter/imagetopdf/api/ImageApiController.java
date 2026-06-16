@@ -44,8 +44,8 @@ public class ImageApiController {
         }
     }
 
-    //@GetMapping("v1/get-by-id{id}")
-    public Document  getDocumentById(@RequestParam("id") UUID id) throws  Exception {
+    @GetMapping("v1/get-by-id{id}")
+    public DocumentResponse  getDocumentById(@RequestParam("id") UUID id) throws  Exception {
         try{
             return documentService.getDocumentById(id);
         }catch(Exception e){

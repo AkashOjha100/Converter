@@ -16,7 +16,6 @@ public class Document extends EntityBase {
     private String fileName;
     private String fileType;
 
-    @Lob
     @Column(columnDefinition = "TEXT")
     private String base64Data;
 }
